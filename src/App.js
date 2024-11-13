@@ -7,23 +7,23 @@ import Home from "./components/Home";
 import BooksForSpecificAuthor from "./components/BooksForSpecificAuthor";
 import Header from "./components/Header";
 import CreateBook from "./components/CreateBook";
-import { BASE_URL } from "./utils/config";
+import {fetchBooks} from "./utils/apicalls";
 
 function App() {
     const [books, setBooks] = useState([]);
 
-    const fetchBooks = useCallback(async () => {
+    const loadBooks = useCallback(async () => {
         try {
-            const response = await axios.get(`${BASE_URL}/listAllBooks`);
-            setBooks(response.data);
+            const booksData = await fetchBooks();
+            setBooks(booksData);
         } catch (error) {
-            console.error('Error fetching books:', error);
+            console.error('Error loading books:', error);
         }
     }, []);
 
     useEffect(() => {
-        fetchBooks();
-    }, [fetchBooks]);
+        loadBooks();
+    }, [loadBooks]);
 
     return (
         <div className="App">
@@ -32,7 +32,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/booklist" element={<Booklist books={books} />} />
                 <Route path="/booksForAuthor" element={<BooksForSpecificAuthor />} />
-                <Route path="/createANewBook" element={<CreateBook fetchBooks={fetchBooks} />} />
+                <Route path="/createANewBook" element={<CreateBook fetchBooks={loadBooks} />} />
             </Routes>
         </div>
     );
