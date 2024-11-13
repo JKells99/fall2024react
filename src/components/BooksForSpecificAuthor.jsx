@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import {BASE_URL} from "../utils/config";
 
 const BooksForSpecificAuthor = () => {
     const [authorName, setAuthorName] = useState('');
@@ -11,7 +12,7 @@ const BooksForSpecificAuthor = () => {
         setLoading(true);
         setError('');
         try {
-            const response = await axios.get(`http://localhost:8080/getBooksForAuthor?authorName=${authorName}`); // Replace with your actual API URL
+            const response = await axios.get(`${BASE_URL}/getBooksForAuthor?authorName=${authorName}`); // Replace with your actual API URL
             setBooks(response.data);
         } catch (error) {
             console.error('There was an error fetching the author details!', error);

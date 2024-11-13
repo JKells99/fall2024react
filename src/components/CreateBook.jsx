@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import axios from "axios";
+import {BASE_URL} from "../utils/config";
 
-function CreateBook() {
+function CreateBook({fetchBooks}) {
     const [title, setTitle] = useState('');
     const [authorName, setAuthorName] = useState('');
     const [publisherName, setPublisherName] = useState('');
@@ -69,9 +70,10 @@ function CreateBook() {
             isbn: isbn,
         };
 
-        axios.post('http://localhost:8080/addNewBook', newBook) // Replace with your actual API URL
+        axios.post(`${BASE_URL}/addNewBook`, newBook)
             .then(response => {
                 console.log('Book created successfully:', response.data);
+
                 setTitle('');
                 setAuthorName('');
                 setPublisherName('');
@@ -79,10 +81,17 @@ function CreateBook() {
                 setStoreList([{ name: '', address: '' }]);
                 setIsbn('');
                 setErrors({});
+                fetchBooks();
+
+
+
             })
+
             .catch(error => {
                 console.error('There was an error creating the book!', error);
             });
+
+
     };
 
     return (
