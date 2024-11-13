@@ -1,14 +1,12 @@
 import React from 'react';
-import Booklist from "./Booklist";
-import CreateBook from "./CreateBook";
-import BooksForSpecificAuthor from "./BooksForSpecificAuthor";
 
-function Home({books,booksForAuthor}) {
+
+
+function Home({books}) {
     return (
         <div>
-            <Booklist books={books}/>
-            <CreateBook/>
-            <BooksForSpecificAuthor booksForAuthor = {booksForAuthor} />
+            <h1><h1>Hello</h1></h1>
+
 
         </div>
     );
