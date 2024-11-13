@@ -1,23 +1,39 @@
 import logo from './logo.svg';
 import './App.css';
+import {Route, Routes} from "react-router-dom";
+import Booklist from "./components/Booklist";
+import axios from "axios";
+import {useEffect, useState} from "react";
+import Home from "./components/Home";
 
 function App() {
+    const [books, setBooks] = useState([]);
+    const[booksforauthor, setBooksforauthor] = useState([]);
+
+
+    useEffect(() => {
+        axios.get('http://localhost:8080/listAllBooks')
+            .then(response => {
+                setBooks(response.data);
+            });
+    }, []);
+
+    useEffect(() => {
+        axios.get('http://localhost:8080/getBooksForAuthor?authorName=Lee%20Child')
+            .then(response => {
+                setBooksforauthor(response.data);
+            });
+    }, []);
+
+
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Routes>
+        <Route path="/" element={<Home books ={books} booksForAuthor = {booksforauthor}/>}>
+        </Route>
+      </Routes>
     </div>
   );
 }
